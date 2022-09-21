@@ -3,11 +3,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     /* variables */
-    //Player speed
+    [Header("Player speed")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
 
+    [Header("Movement")]
     [SerializeField] private Vector3 moveDirection;
     [SerializeField] private Vector3 velocity;
 
@@ -17,13 +18,14 @@ public class PlayerMovement : MonoBehaviour
     private KeyCode jumpingKey = KeyCode.Space;
 
     //GRAVITY
+    [Header("Gravity")]
     [SerializeField] private bool isGrounded;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private LayerMask groundMask;
 
     //If you want to change gravity manually
-    //[SerializeField] private float gravity;
-    private const float gravity = -9.81f;
+    [SerializeField] private float gravity;
+    private const float DEFAULT_GRAVITY = -9.81f;
 
     [SerializeField] private float jumpHeight;
 
@@ -32,6 +34,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        if (gravity >= 0)
+        {
+            gravity = DEFAULT_GRAVITY;
+        }
     }
 
     // Update is called once per frame
@@ -54,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         float xMove = Input.GetAxis("Horizontal");
 
         moveDirection = new Vector3(0, 0, zMove);
+        moveDirection = transform.TransformDirection(moveDirection);
 
         if (isGrounded)
         {
