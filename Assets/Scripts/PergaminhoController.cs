@@ -35,7 +35,6 @@ public class PergaminhoController : MonoBehaviour
 
     public void SetNext()
     {
-
         TurnInvisible(actualScroll);
         if (actualScroll + 1 == pergaminhos.Count)
         {
@@ -43,6 +42,7 @@ public class PergaminhoController : MonoBehaviour
             actualScroll = (actualScroll + 1) % pergaminhos.Count;
             return;
         }
+        actualScroll = (actualScroll + 1) % pergaminhos.Count;
         TurnVisible(actualScroll);
     }
 
