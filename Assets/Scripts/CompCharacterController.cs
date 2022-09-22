@@ -81,4 +81,9 @@ public class CompCharacterController : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision x)
+    {
+        Debug.Log(x.collider.material);
+    }
+
 }
