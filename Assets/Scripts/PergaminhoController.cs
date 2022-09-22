@@ -35,10 +35,29 @@ public class PergaminhoController : MonoBehaviour
 
     public void SetNext()
     {
-        Debug.Log(actualScroll + " Desativado");
-        pergaminhos[actualScroll].GetComponentInChildren<MeshRenderer>().enabled = false;
-        actualScroll = (actualScroll + 1) % pergaminhos.Count;
-        Debug.Log(actualScroll + " Ativado");
-        pergaminhos[actualScroll].GetComponentInChildren<MeshRenderer>().enabled = true;
+
+        TurnInvisible(actualScroll);
+        if (actualScroll + 1 == pergaminhos.Count)
+        {
+            Win();
+            actualScroll = (actualScroll + 1) % pergaminhos.Count;
+            return;
+        }
+        TurnVisible(actualScroll);
+    }
+
+    private void TurnVisible(int index)
+    {
+        pergaminhos[index].GetComponentInChildren<MeshRenderer>().enabled = true;
+    }
+
+    private void TurnInvisible(int index)
+    {
+        pergaminhos[index].GetComponentInChildren<MeshRenderer>().enabled = false;
+    }
+
+    private void Win()
+    {
+        Debug.Log("Você Venceu");
     }
 }
