@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CompCharacterController : MonoBehaviour
@@ -24,6 +22,8 @@ public class CompCharacterController : MonoBehaviour
     [SerializeField] private float jumpHeight = 1f;
     [SerializeField] private LayerMask groundMask = -1;
 
+
+    private PergaminhoController _scroll;
     private float targetSpeed;
     private Rigidbody _rb;
     private Quaternion targetRotation;
@@ -35,7 +35,7 @@ public class CompCharacterController : MonoBehaviour
     void Start()
     {
         jumpForce = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
-
+        _scroll = GetComponent<PergaminhoController>();
         _animator = GetComponent<Animator>();
         _inputs = GetComponent<PlayerInputs>();
         cameraController = GetComponent<CameraController>();
@@ -83,7 +83,10 @@ public class CompCharacterController : MonoBehaviour
 
     void OnCollisionEnter(Collision x)
     {
-        Debug.Log(x.collider.material);
+        if (x.gameObject.tag == "Coletavel" && x.gameObject.GetComponentInChildren<MeshRenderer>().enabled)
+        {
+            _scroll.SetNext();
+        }
     }
 
 }
