@@ -20,31 +20,26 @@ public class CompCharacterController : MonoBehaviour
     //GRAVITY
     [Header("Gravity")]
     [SerializeField] private bool isGrounded = true;
-    [SerializeField] private float groundCheckDistance;
-    [SerializeField] private LayerMask groundMask;
-
-    //If you want to change gravity manually
-    [SerializeField] private float gravity;
-    private const float DEFAULT_GRAVITY = 9.81f;
-
-    [SerializeField] private float jumpHeight;
-    [SerializeField] private Vector3 downVector;
-
+    [SerializeField] private float groundCheckDistance = 0.1f;
+    [SerializeField] private float jumpHeight = 1f;
+    [SerializeField] private LayerMask groundMask = -1;
 
     private float targetSpeed;
+    private Rigidbody _rb;
     private Quaternion targetRotation;
     private Quaternion newRotation;
     private Vector3 newVelocity;
+    private float jumpForce;
 
 
     void Start()
     {
-        if (gravity < 0) { gravity *= -1; }
-        else if (gravity == 0) { gravity = DEFAULT_GRAVITY; }
+        jumpForce = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
 
         _animator = GetComponent<Animator>();
         _inputs = GetComponent<PlayerInputs>();
         cameraController = GetComponent<CameraController>();
+        _rb = GetComponent<Rigidbody>();
 
         _animator.applyRootMotion = false;
     }
@@ -74,9 +69,16 @@ public class CompCharacterController : MonoBehaviour
             transform.rotation = newRotation;
         }
 
-
-
         _animator.SetFloat("Forward", newSpeed);
+    }
+
+    void FixedUpdate()
+    {
+        if (_inputs.Jump.Pressed() && isGrounded)
+        {
+            _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            _animator.SetTrigger("JumpOn");
+        }
     }
 
 }
