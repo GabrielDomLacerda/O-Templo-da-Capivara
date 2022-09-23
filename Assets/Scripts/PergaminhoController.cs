@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PergaminhoController : MonoBehaviour
 {
@@ -58,6 +59,6 @@ public class PergaminhoController : MonoBehaviour
 
     private void Win()
     {
-        Debug.Log("Você Venceu");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

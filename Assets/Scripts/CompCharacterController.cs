@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CompCharacterController : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class CompCharacterController : MonoBehaviour
 
 
     private PergaminhoController _scroll;
+    private ScrollDialogue _dialogue;
     private float targetSpeed;
     private Rigidbody _rb;
     private Quaternion targetRotation;
@@ -36,6 +38,7 @@ public class CompCharacterController : MonoBehaviour
     {
         jumpForce = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
         _scroll = GetComponent<PergaminhoController>();
+        _dialogue = GetComponent<ScrollDialogue>();
         _animator = GetComponent<Animator>();
         _inputs = GetComponent<PlayerInputs>();
         cameraController = GetComponent<CameraController>();
@@ -85,7 +88,12 @@ public class CompCharacterController : MonoBehaviour
     {
         if (x.gameObject.tag == "Coletavel" && x.gameObject.GetComponentInChildren<MeshRenderer>().enabled)
         {
+            _dialogue.DialogueTrue();
             _scroll.SetNext();
+        }
+        else if (x.gameObject.tag == "trofeu")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MapaPrincipal.unity
     guid: aeec2f2fa2ada584eab4936985c62c11
+  - enabled: 1
+    path: Assets/finalMap.unity
+    guid: 94dffd2d25b2bd6409deaa21e263efcf
+  - enabled: 1
+    path: Assets/FinalScene.unity
+    guid: a17b80cb3db3b324da06b23d0183d2b1
   m_configObjects: {}
